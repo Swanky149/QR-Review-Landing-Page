@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rate Your Experience</title>
+  <style>
+    body { font-family: Arial; text-align: center; padding: 50px; }
+    .star { font-size: 40px; cursor: pointer; color: #ccc; }
+    .star.selected { color: gold; }
+    #complaint-form { display: none; margin-top: 20px; }
+    textarea, input { margin-top: 10px; padding: 10px; width: 80%; max-width: 400px; }
+    button { padding: 10px 20px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h2>How was your experience?</h2>
+  <div id="star-rating">
+    <span class="star" data-value="1">★</span>
+    <span class="star" data-value="2">★</span>
+    <span class="star" data-value="3">★</span>
+    <span class="star" data-value="4">★</span>
+    <span class="star" data-value="5">★</span>
+  </div>
+
+  <div id="complaint-form">
+    <h3>We're sorry to hear that.</h3>
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <textarea name="message" rows="4" placeholder="Tell us what went wrong..." required></textarea><br/>
+      <input type="email" name="email" placeholder="Your email (optional)"/><br/>
+      <button type="submit">Send Feedback</button>
+    </form>
+    <p>Thank you for helping us improve.</p>
+  </div>
+
+  <script>
+    const stars = document.querySelectorAll('.star');
+    stars.forEach(star => {
+      star.addEventListener('click', () => {
+        const rating = parseInt(star.getAttribute('data-value'));
+
+        stars.forEach(s => s.classList.remove('selected'));
+        for (let i = 0; i < rating; i++) {
+          stars[i].classList.add('selected');
+        }
+
+        if (rating < 4) {
+          document.getElementById('complaint-form').style.display = 'block';
+          document.getElementById('star-rating').style.display = 'none';
+        } else {
+          window.location.href = 'https://g.page/YOURBUSINESSNAME/review'; // Replace this
+        }
+      });
+    });
+  </script>
+</body>
+</html>
